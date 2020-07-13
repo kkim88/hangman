@@ -31,8 +31,4 @@ abstract public class Dummy {
     void biography() {
         System.out.println("A summary of " + this.name + "'s crimes");
     }
-
-    void message() {
-        System.out.println(this.name + " calls out to you for help");
-    }
 }
