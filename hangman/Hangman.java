@@ -1,6 +1,7 @@
 package hangman;
 
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Hangman {
 
@@ -12,13 +13,18 @@ public class Hangman {
     private static String chosenWord = wordList[(int) (Math.random() * wordList.length)]; // random chosen word from list
     private static String hiddenWord = "*".repeat(chosenWord.length()); // string of asterisks same length as chosenWord to show player
     private static int errors = 0; // count for number of errors player has made
+    private static int choice; // character choice
+    private static char instructions; // yes/no instructions
 
     public static void main(String[] args) {
         System.out.println("Welcome to Hangman DELUXE!");
 
-        Scanner i = new Scanner(System.in); // reads next user input for instructions
-        System.out.println("Do you want to learn how to play? If so, enter y. If not, enter anything that isn't y or Y.");
-        char instructions = i.next().charAt(0);
+        do {
+            Scanner i = new Scanner(System.in); // reads next user input for instructions
+            System.out.println("Do you want to learn how to play? Enter y for yes or n for no.");
+            instructions = i.next().charAt(0);
+        }
+        while (instructions !='y' && instructions !='Y' && instructions !='n' && instructions != 'N');
 
         if (instructions == 'y' || instructions == 'Y') {
             WordsInterface inst = () -> {
@@ -26,7 +32,8 @@ public class Hangman {
                         "The player then guesses a letter they think might be in the \nword when prompted. If the letter " +
                         "exists in the word, it is revealed to the player in the corresponding spots. If the letter does" +
                         " not exist, a \nportion of a stick figure being hanged is drawn. The game ends when the player " +
-                        "either reveals the entire word or the stick figure is fully drawn.";
+                        "either reveals the entire word or the stick figure is fully drawn.\n\nFor more in depth " +
+                        "instructions, please see the github repo at: https://github.com/kkim88/hangman/blob/master/instructions.md";
             };
             System.out.println(inst.printWords());
         }
@@ -89,8 +96,6 @@ public class Hangman {
         System.out.println("Having read up on all three men, who will you try to save?");
         // user input for choice
 
-        int choice;
-
         do {
             System.out.println("Enter 1 for Harry, 2 for Henry, or 3 for Hank.");
             Scanner c = new Scanner(System.in);
@@ -152,45 +157,13 @@ public class Hangman {
         Scanner guess = new Scanner(System.in); // scanner for letter inputs
         String letter; // letter guessed by player
 
-        // method to check player guesses
-
-        public static void check(String letter) {
-            String newWord = "";
-            for (int j = 0; j < chosenWord.length(); j++) {
-                if (chosenWord.charAt(j) == letter.charAt(0)) {
-                    newWord += letter.charAt(0);
-                }
-                else if (hiddenWord.charAt(j) != '*') {
-                    newWord += chosenWord.charAt(j);
-                }
-                else {
-                    newWord += "*";
-                }
-            }
-
-            // if guess is wrong, add 1 to errors and print dummy
-
-            if (hiddenWord == newWord) {
-                errors++;
-                printDummy();
-            }
-            else {
-                hiddenWord = newWord;
-            }
-
-            // if hiddenWord is identical to chosenWord, player wins
-
-            if (hiddenWord == chosenWord) {
-                System.out.println("You win!");
-            }
-        }
-
         // while loop for game. Runs while player still has guesses left and word has not been revealed.
 
         while (errors < 7 && hiddenWord.contains("*")) {
             System.out.println("Word: " + hiddenWord);
             System.out.println("Enter a letter.");
             letter = guess.next();
+            check(letter);
         }
 
     }
@@ -209,6 +182,161 @@ public class Hangman {
 
         }
 
+    }
+
+    // method to check player guesses
+
+    public static void check(String letter) {
+        String newWord = "";
+        for (int j = 0; j < chosenWord.length(); j++) {
+            if (chosenWord.charAt(j) == letter.charAt(0)) {
+                newWord += letter.charAt(0);
+            }
+            else if (hiddenWord.charAt(j) != '*') {
+                newWord += chosenWord.charAt(j);
+            }
+            else {
+                newWord += "*";
+            }
+        }
+
+        // if guess is wrong, add 1 to errors and print dummy
+
+        if (hiddenWord.equals(newWord)) {
+            errors++;
+            printDummy();
+        }
+        else {
+            hiddenWord = newWord;
+        }
+
+        // if hiddenWord is identical to chosenWord, player wins
+
+        if (hiddenWord.equals(chosenWord)) {
+            System.out.println(chosenWord);
+            System.out.println("You win!");
+            WordsInterface winner = () -> {
+                return "\"Well, I'll be,\" the executioner muses casually. \"You did it. A deal's a deal, I guess.\" " +
+                        "The absolute casualness of his tone infuriates you. This really is \njust a game to him, isn't it? " +
+                        "Still, you played and you won, and though this victory may seem hollow, you will claim it all the same. " +
+                        "Real change will come \nto this town one day, and although that day is not today, this is an important " +
+                        "step towards towards that future. Until that day arrives, however, you still \nhave your work cut out for you.\n";
+            };
+            System.out.println(winner.printWords());
+            if (choice == 1) {
+                Harry.goodEnd();
+            }
+            else if (choice == 2) {
+                Henry.goodEnd();
+            }
+            else {
+                Hank.goodEnd();
+            }
+        }
+
+    }
+
+    // method to print dummy
+
+    public static void printDummy() {
+        switch (errors) {
+            case 1: {
+                Stream<String> image = Stream.of("  +---+",
+                                                 "  |   |",
+                                                 "      |",
+                                                 "      |",
+                                                 "      |",
+                                                 "      |",
+                                                 "=========");
+                image.forEach(System.out::println);
+                break;
+            }
+            case 2: {
+                Stream<String> image = Stream.of("  +---+",
+                                                 "  |   |",
+                                                 "  O   |",
+                                                 "      |",
+                                                 "      |",
+                                                 "      |",
+                                                 "=========");
+                image.forEach(System.out::println);
+                break;
+            }
+            case 3: {
+                Stream<String> image = Stream.of("  +---+",
+                                                 "  |   |",
+                                                 "  O   |",
+                                                 "  |   |",
+                                                 "      |",
+                                                 "      |",
+                                                 "=========");
+                image.forEach(System.out::println);
+                break;
+            }
+            case 4: {
+                Stream<String> image = Stream.of("  +---+",
+                                                 "  |   |",
+                                                 "  O   |",
+                                                 " /|   |",
+                                                 "      |",
+                                                 "      |",
+                                                 "=========");
+                image.forEach(System.out::println);
+                break;
+            }
+            case 5: {
+                Stream<String> image = Stream.of("  +---+",
+                                                 "  |   |",
+                                                 "  O   |",
+                                                 " /|\\  |",
+                                                 "      |",
+                                                 "      |",
+                                                 "=========");
+                image.forEach(System.out::println);
+                break;
+            }
+            case 6: {
+                Stream<String> image = Stream.of("  +---+",
+                                                 "  |   |",
+                                                 "  O   |",
+                                                 " /|\\  |",
+                                                 " /    |",
+                                                 "      |",
+                                                 "=========");
+                image.forEach(System.out::println);
+                break;
+            }
+            case 7: {
+                Stream<String> image = Stream.of("  +---+",
+                                                 "  |   |",
+                                                 "  O   |",
+                                                 " /|\\  |",
+                                                 " / \\  |",
+                                                 "      |",
+                                                 "=========");
+                image.forEach(System.out::println);
+                System.out.println("GAME OVER!");
+                System.out.println("\nThe word was " + chosenWord + "\n");
+                WordsInterface gameOver = () -> {
+                    return ("The executioner shrugs. \"Aww, too bad, so sad,\" he coos. \"Looks like you're donezo!\" No, " +
+                            "no...! This can't be! You cry out in frustration. This is ludicrous, \nstaking a human being's " +
+                            "life on a word game of all things! But that's the way this town has always been, hasn't it? " +
+                            "A cruel place that doesn't actually \ndeal with problems, but sweeps them under the rug by " +
+                            "ruining lives. They may have won today, but you can't let this stop you. One day, one day " +
+                            "justice will \nprevail.\n");
+                };
+                System.out.println(gameOver.printWords());
+                if (choice == 1) {
+                    Harry.badEnd();
+                }
+                else if (choice == 2) {
+                    Henry.badEnd();
+                }
+                else {
+                    Hank.badEnd();
+                }
+            }
+        }
     }
 
     // interface for simple print statements
