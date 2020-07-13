@@ -13,7 +13,13 @@ public class Harry extends Dummy {
                 " scapegoat and the true culprit is at large. Save him before it's \ntoo late!");
     }
 
-    void message() {
-        System.out.println(this.name + "'s burn with anger. \n\"Y'all have the wrong man!\" he shouts.");
+    public static void goodEnd() {
+        System.out.println("Free, Harry jumps from the gallows. The gathered crowd quickly moves to give him space. " +
+                "\"THIS is why I hate y'all\" he spits, then stalks away without even \nsparing you a glance. A thank you " +
+                "would've been nice. Jerk.");
+    }
+
+    public static void badEnd() {
+        System.out.println("Harry's eyes burn with anger. \n\"Y'all have the wrong man!\" he shouts. His cries fall on deaf ears as the noose is put around his neck.");
     }
 }
