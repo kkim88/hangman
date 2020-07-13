@@ -71,7 +71,6 @@ public class Hangman {
 
         // show information of each man to the player
 
-
         System.out.println("Name: " + harry.getName());
         System.out.println("Age: " + harry.getAge());
         System.out.println("Crime: " + harry.getCrime() + "\n");
@@ -148,7 +147,7 @@ public class Hangman {
                     "\n\n\"Aww yeah, this will be fun! I always wanted to do this. Okay I got my word now. By the way," +
                     "the word is related to Java programming.\" \n\nYou ask him why. \n\nHe shrugs. \"It just is, okay?\"" +
                     "\n\nA man's life is now dependent on something that is roughly 30% your knowledge of Java programming and " +
-                    "70% luck. Decent odds, you suppose. You take a deep \nbreath and begin guessing.";
+                    "70% luck. Decent odds, you suppose. You take a deep \nbreath and begin guessing.\n";
         };
         System.out.println(opening3.printWords());
 
