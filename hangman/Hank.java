@@ -13,8 +13,16 @@ public class Hank extends Dummy {
                 " having run away to elope with her boyfriend. Save Hank from being punished \nfor a crime that never occurred!");
     }
 
-    void message() {
-        System.out.println(this.name + " is completely silent as he is led closer and closer to the gallows. His face is" +
+    public static void goodEnd() {
+        System.out.println("Hank hyperventilates as he is released from custody. After a few seconds, he looks at you with " +
+                "sheer gratitude in his eyes. \n\nA passing couple stops to stare at the commotion and the wife squeals. " +
+                "\n\n\"Honey, look, look, an execution!\" she squeals. Everyone turns to stare at her. It's the so-called " +
+                "\"murder victim\". She looks around. \"...what?\" she asks. \n\nThat's it. you're done for the day.");
+
+    }
+
+    public static void badEnd() {
+        System.out.println("Hank is completely silent as the executioner shoves him onto the platform. His face is" +
                 " devoid of any emotion, having accepted his cruel, unfair fate.");
     }
 }

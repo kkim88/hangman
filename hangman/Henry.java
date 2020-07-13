@@ -13,7 +13,14 @@ public class Henry extends Dummy {
                 " who is to prevent his execution and question him further!");
     }
 
-    void message() {
-        System.out.println(this.name + "'s eyes brim over with tears. \"Oh Mary, Jessica, forgive me!\"");
+    public static void goodEnd() {
+        System.out.println("As Henry is released, a woman who you presume to be his wife rushes out from the crowd to " +
+                "embrace him. He turns to you. \n\n\"Thank you!\" he says. \"You saved my life! Now I can go home!\"" +
+                "\n\nYou tell him not quite. He still has to answer questions about his shady employer." +
+                "\n\n\"Aww,\" he sighs, bowing his head.");
+    }
+
+    public static void badEnd() {
+        System.out.println("Henry's eyes brim over with tears. \"Oh Mary, Jessica, forgive me!\" A lone woman in the crowd reaches for him, but there is nothing that can be done.");
     }
 }
